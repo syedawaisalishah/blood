@@ -5,6 +5,7 @@ import '../common/assets.dart';
 import '../common/colors.dart';
 import '../widgets/all_blood_requests.dart';
 import '../widgets/custom_drawer.dart';
+import 'ambulancescreen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const route = 'home';
@@ -14,7 +15,18 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const CustomDrawer(),
-      appBar: AppBar(title: const Text('Blood Requests')),
+      appBar: AppBar(title: const Text('Blood Requests'), actions: [
+        IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AmbulanceScreen()),
+              );
+            },
+            icon: Icon(
+              Icons.bus_alert,
+            ))
+      ]),
       body: SafeArea(
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),

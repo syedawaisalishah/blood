@@ -15,6 +15,7 @@ import '../screens/add_news_item.dart';
 import '../screens/login_screen.dart';
 import '../screens/news_screen.dart';
 import '../screens/profile_screen.dart';
+
 import '../screens/who_can_donate_screen.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -35,11 +36,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
         child: Column(
           children: [
             UserAccountsDrawerHeader(
+              decoration: BoxDecoration(
+                color: _showAdmin ? Colors.red : Colors.blue,
+              ),
               accountName: Text(user?.displayName ?? 'Blood Donation'),
               accountEmail: Text(user?.email ?? AppConfig.email),
               otherAccountsPictures: [
-                if (Hive.box(ConfigBox.key)
-                    .get(ConfigBox.isAdmin, defaultValue: false) as bool)
+                if (Hive.box(ConfigBox.key).get(ConfigBox.isAdmin, defaultValue: false) as bool)
                   InkWell(
                     onTap: () {
                       setState(() => _showAdmin = !_showAdmin);
@@ -109,50 +112,75 @@ class _CustomDrawerState extends State<CustomDrawer> {
   }
 
   List<Widget> get _screens => [
-        const _DrawerTile(
+        // ListTile(
+        //   title: Icon(Icons.person),
+        //   subtitle: Text(
+        //     'Profile',
+        //   ),
+        //   onTap: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => const ProfileScreen()),
+        //     );
+        //   },
+        // ),
+        _DrawerTile(
           title: 'Profile',
-          icon: Icons.person,
+          icon: _showAdmin ? Icons.shield_moon_outlined : Icons.person,
           destination: ProfileScreen.route,
+          title1: _showAdmin ? 'Admin' : 'Donor',
         ),
-        const _DrawerTile(
+        _DrawerTile(
           title: 'Request Blood',
           icon: Icons.bloodtype_rounded,
           destination: AddBloodRequestScreen.route,
+          title1: ConfigBox.isAdmin == true ? '' : '',
         ),
         if (_showAdmin)
-          const _DrawerTile(
+          _DrawerTile(
             title: 'Add News',
             icon: Icons.add,
             destination: AddNewsItem.route,
+            title1: ConfigBox.isAdmin == true ? '' : '',
           ),
-        const _DrawerTile(
+        _DrawerTile(
           title: 'News and Tips',
           icon: Icons.notifications,
           destination: NewsScreen.route,
+          title1: ConfigBox.isAdmin == true ? '' : '',
         ),
-        const _DrawerTile(
+        _DrawerTile(
           title: 'Can I donate blood?',
           icon: Icons.question_mark_rounded,
           destination: WhoCanDonateScreen.route,
+          title1: ConfigBox.isAdmin == true ? '' : '',
         ),
       ];
 }
 
 class _DrawerTile extends StatelessWidget {
   final String title, destination;
+  late String title1;
   final IconData icon;
 
-  const _DrawerTile({
+  _DrawerTile({
     Key? key,
     required this.title,
     required this.icon,
     required this.destination,
+    required this.title1,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(title),
+      title: Text(
+        title,
+      ),
+      trailing: Text(
+        title1,
+        style: TextStyle(color: Colors.blue),
+      ),
       leading: Icon(icon),
       onTap: () {
         Navigator.pop(context);

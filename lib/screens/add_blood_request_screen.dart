@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../data/medical_center.dart';
+
 import '../utils/blood_types.dart';
 import '../utils/tools.dart';
 import '../utils/validators.dart';
@@ -82,8 +83,7 @@ class _AddBloodRequestScreenState extends State<AddBloodRequestScreen> {
       setState(() => _isLoading = true);
       try {
         final user = FirebaseAuth.instance.currentUser!;
-        final requests =
-            FirebaseFirestore.instance.collection('blood_requests');
+        final requests = FirebaseFirestore.instance.collection('blood_requests');
         await requests.add({
           'uid': user.uid,
           'submittedBy': user.displayName,
@@ -120,8 +120,7 @@ class _AddBloodRequestScreenState extends State<AddBloodRequestScreen> {
   Widget _contactNumberField() => TextFormField(
         controller: _contactNumberController,
         keyboardType: TextInputType.phone,
-        validator: (v) =>
-            Validators.required(v, 'Contact number') ?? Validators.phone(v!),
+        validator: (v) => Validators.required(v, 'Contact number') ?? Validators.phone(v!),
         decoration: const InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'Contact number',
@@ -149,9 +148,7 @@ class _AddBloodRequestScreenState extends State<AddBloodRequestScreen> {
           border: OutlineInputBorder(),
           labelText: 'Blood Type',
         ),
-        items: BloodTypeUtils.bloodTypes
-            .map((v) => DropdownMenuItem(value: v, child: Text(v)))
-            .toList(),
+        items: BloodTypeUtils.bloodTypes.map((v) => DropdownMenuItem(value: v, child: Text(v))).toList(),
       );
 
   Widget _medicalCenterSelector() => GestureDetector(
@@ -169,9 +166,7 @@ class _AddBloodRequestScreenState extends State<AddBloodRequestScreen> {
           child: TextFormField(
             key: ValueKey<String>(_medicalCenter?.name ?? 'none'),
             initialValue: _medicalCenter?.name,
-            validator: (_) => _medicalCenter == null
-                ? '* Please select a medical center'
-                : null,
+            validator: (_) => _medicalCenter == null ? '* Please select a medical center' : null,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Medical Center',
@@ -197,8 +192,7 @@ class _AddBloodRequestScreenState extends State<AddBloodRequestScreen> {
           child: TextFormField(
             key: ValueKey<DateTime>(_requestDate ?? DateTime.now()),
             initialValue: Tools.formatDate(_requestDate),
-            validator: (_) =>
-                _requestDate == null ? '* Please select a date' : null,
+            validator: (_) => _requestDate == null ? '* Please select a date' : null,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Request date',

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../common/colors.dart';
 import '../data/blood_request.dart';
@@ -8,14 +10,25 @@ import '../utils/tools.dart';
 
 const kBorderRadius = 12.0;
 
-class BloodRequestTile extends StatelessWidget {
+class BloodRequestTile extends StatefulWidget {
   final BloodRequest? request;
 
-  const BloodRequestTile({Key? key, this.request}) : super(key: key);
+  BloodRequestTile({Key? key, this.request}) : super(key: key);
+
+  @override
+  State<BloodRequestTile> createState() => _BloodRequestTileState();
+}
+
+class _BloodRequestTileState extends State<BloodRequestTile> {
+  // // int long=int.parse(request!.medicalCenter.latitude);
+  // late GoogleMapController mycontroller;
+  // final Set<Marker> markers = new Set(); //markers for google map
+  // late LatLng showLocation = LatLng(double.parse(widget.request!.medicalCenter.latitude.toString()), double.parse(widget.request!.medicalCenter.longitude.toString()));
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       elevation: 2,
@@ -24,6 +37,26 @@ class BloodRequestTile extends StatelessWidget {
       ),
       child: Column(
         children: [
+          // Container(
+          //   width: double.infinity,
+          //   height: 200,
+          //   color: Colors.red,
+          //   child: GoogleMap(
+          //     mapType: MapType.normal,
+          //     // markers: '',
+          //     initialCameraPosition: CameraPosition(
+          //       target: LatLng(double.parse(widget.request!.medicalCenter.latitude.toString()), double.parse(widget.request!.medicalCenter.longitude.toString())),
+          //       zoom: 14,
+          //     ),
+          //     markers: getmarkers(),
+
+          //     onMapCreated: (GoogleMapController controller) {
+          //       setState(() {
+          //         mycontroller = controller;
+          //       });
+          //     },
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -33,11 +66,11 @@ class BloodRequestTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Patient Name', style: textTheme.caption),
-                      Text(request!.patientName ?? ''),
+                      Text(widget.request!.patientName ?? ''),
                       const SizedBox(height: 12),
                       Text('Location', style: textTheme.caption),
                       Text(
-                        '${request!.medicalCenter.name} - ${request!.medicalCenter.location}',
+                        '${widget.request!.medicalCenter.name} - ${widget.request!.medicalCenter.location}',
                       ),
                     ],
                   ),
@@ -47,10 +80,10 @@ class BloodRequestTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Needed By', style: textTheme.caption),
-                    Text(Tools.formatDate(request!.requestDate) ?? ''),
+                    Text(Tools.formatDate(widget.request!.requestDate) ?? ''),
                     const SizedBox(height: 12),
                     Text('Blood Type', style: textTheme.caption),
-                    Text(request!.bloodType.name),
+                    Text(widget.request!.bloodType.name),
                   ],
                 ),
               ],
@@ -60,7 +93,7 @@ class BloodRequestTile extends StatelessWidget {
           InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (_) => SingleRequestScreen(request: request),
+                builder: (_) => SingleRequestScreen(request: widget.request),
               ));
             },
             borderRadius: const BorderRadius.only(
@@ -89,4 +122,25 @@ class BloodRequestTile extends StatelessWidget {
       ),
     );
   }
+
+  // Set<Marker> getmarkers() {
+  //   //markers to place on map
+  //   setState(() {
+  //     markers.add(Marker(
+  //       //add first marker
+  //       markerId: MarkerId(showLocation.toString()),
+  //       position: LatLng(double.parse(widget.request!.medicalCenter.latitude.toString()), double.parse(widget.request!.medicalCenter.longitude.toString())), //position of marker
+  //       infoWindow: InfoWindow(
+  //         //popup info
+  //         title:widget.request!.medicalCenter.name.toString(),
+  //         snippet:widget.request!.medicalCenter.location.toString(),
+  //       ),
+  //       icon: BitmapDescriptor.defaultMarker, //Icon for Marker
+  //     ));
+
+  //     //add more markers here
+  //   });
+
+  //   return markers;
+  // }
 }

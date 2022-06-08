@@ -27,19 +27,9 @@ class _SubmittedBloodRequestsState extends State<SubmittedBloodRequests> {
   void initState() {
     super.initState();
     if (widget.activeOnly) {
-      _submittedRequests = FirebaseFirestore.instance
-          .collection('blood_requests')
-          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-          .where('isFulfilled', isEqualTo: false)
-          .orderBy('submittedAt', descending: true)
-          .get();
+      _submittedRequests = FirebaseFirestore.instance.collection('blood_requests').where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid).where('isFulfilled', isEqualTo: false).orderBy('submittedAt', descending: true).get();
     } else {
-      _submittedRequests = FirebaseFirestore.instance
-          .collection('blood_requests')
-          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-          .orderBy('submittedAt', descending: true)
-          .limit(20)
-          .get();
+      _submittedRequests = FirebaseFirestore.instance.collection('blood_requests').where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid).orderBy('submittedAt', descending: true).limit(20).get();
     }
   }
 
@@ -48,6 +38,7 @@ class _SubmittedBloodRequestsState extends State<SubmittedBloodRequests> {
     return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
       future: _submittedRequests,
       builder: (context, snapshot) {
+        var len = snapshot.data!.size;
         if (snapshot.hasError) {
           return Center(
             child: Text(

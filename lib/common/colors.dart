@@ -6,6 +6,7 @@ class MainColors {
   static const accent = Color(0xffeb9096);
   static const bg = Color(0xFFFAFAFA);
   static const bgs = Color(0xff972D2F);
+  static const bluecolor = Colors.blue;
   static const swatch = MaterialColor(0xffD7212D, {
     50: Color.fromRGBO(215, 33, 45, .1),
     100: Color.fromRGBO(215, 33, 45, .2),

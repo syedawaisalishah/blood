@@ -13,6 +13,9 @@
     <application
         android:label="Blood Donation"
         android:icon="@mipmap/ic_launcher">
+          <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyAci3YRYiS2IqL1UBJvfh6y1NnM_FHdDec"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

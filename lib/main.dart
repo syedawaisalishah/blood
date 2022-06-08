@@ -10,10 +10,12 @@ import 'screens/add_news_item.dart';
 import 'screens/edit_profile_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
+
 import 'screens/news_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/registration_screen.dart';
 import 'screens/splash_screen.dart';
+
 import 'screens/tutorial_screen.dart';
 import 'screens/who_can_donate_screen.dart';
 
@@ -22,6 +24,7 @@ Future<void> main() async {
   await Hive.openBox(ConfigBox.key);
   runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   @override
@@ -47,6 +50,9 @@ class MyApp extends StatelessWidget {
         NewsScreen.route: (_) => const NewsScreen(),
         AddNewsItem.route: (_) => const AddNewsItem(),
         EditProfileScreen.route: (_) => const EditProfileScreen(),
+        
+
+   
       },
     );
   }

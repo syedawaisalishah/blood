@@ -21,12 +21,7 @@ class _AllBloodRequestsState extends State<AllBloodRequests> {
   @override
   void initState() {
     super.initState();
-    _query = FirebaseFirestore.instance
-        .collection('blood_requests')
-        .where('isFulfilled', isEqualTo: false)
-        .orderBy('requestDate')
-        .limit(30)
-        .snapshots();
+    _query = FirebaseFirestore.instance.collection('blood_requests').where('isFulfilled', isEqualTo: false).orderBy('requestDate').limit(30).snapshots();
   }
 
   @override

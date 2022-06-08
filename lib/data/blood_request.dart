@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 
 import '../utils/blood_types.dart';
 import 'medical_center.dart';
+import 'lists/lrc_centers.dart';
 
 class BloodRequest {
   final String? id;
@@ -26,8 +27,7 @@ class BloodRequest {
     this.isFulfilled = false,
   });
 
-  factory BloodRequest.fromJson(Map<String, dynamic> json, {String? id}) =>
-      BloodRequest(
+  factory BloodRequest.fromJson(Map<String, dynamic> json, {String? id}) => BloodRequest(
         id: id,
         uid: json['uid'] as String?,
         submittedBy: json['submittedBy'] as String?,

@@ -27,15 +27,7 @@ class _MedicalCenterPickerState extends State<MedicalCenterPicker> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final filtered = _centers
-        .where((c) =>
-            c.name!
-                .toLowerCase()
-                .contains(_searchController.text.toLowerCase()) ||
-            c.location!
-                .toLowerCase()
-                .contains(_searchController.text.toLowerCase()))
-        .toList();
+    final filtered = _centers.where((c) => c.name!.toLowerCase().contains(_searchController.text.toLowerCase()) || c.location!.toLowerCase().contains(_searchController.text.toLowerCase())).toList();
     return DraggableScrollableSheet(
       expand: false,
       initialChildSize: 0.8,
@@ -62,36 +54,37 @@ class _MedicalCenterPickerState extends State<MedicalCenterPicker> {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  // DropdownButtonHideUnderline(
-                  //   child: DropdownButton<MedicalCenterCategory>(
-                  //     value: _category,
-                  //     items: MedicalCenterCategory.values
-                  //         .map((c) => DropdownMenuItem(
-                  //               value: c,
-                  //               child: Text(c.name),
-                  //             ))
-                  //         .toList(),
-                  //     onChanged: (cat) {
-                  //       if (cat == _category) return;
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton<MedicalCenterCategory>(
+                      value: _category,
+                      items: MedicalCenterCategory.values
+                          .map((c) => DropdownMenuItem(
+                                value: c,
+                                child: Text(c.name),
+                              ))
+                          .toList(),
+                      onChanged: (cat) {
+                        if (cat == _category) return;
 
-                  //       switch (cat!) {
-                  //         case MedicalCenterCategory.hospitals:
-                  //           _centers = hospitals;
-                  //           break;
-                  //         case MedicalCenterCategory.lrcCenters:
-                  //           _centers = lrcCenters;
-                  //           break;
-                  //         case MedicalCenterCategory.bloodBanks:
-                  //           _centers = bloodBanks;
-                  //           break;
-                  //         case MedicalCenterCategory.medicalCenters:
-                  //           _centers = medicalCenters;
-                  //           break;
-                  //       }
-                  //       setState(() => _category = cat);
-                  //     },
-                  //   ),
-                  // ),
+                        switch (cat!) {
+                          case MedicalCenterCategory.hospitals:
+                            _centers = hospitals;
+                            break;
+                          case MedicalCenterCategory.bloodBanks:
+                            _centers = bloodBanks;
+                            break;
+                          // case MedicalCenterCategory.lrcCenters:
+                          //   _centers = lrcCenters;
+                          //   break;
+
+                          // case MedicalCenterCategory.medicalCenters:
+                          //   _centers = medicalCenters;
+                          //   break;
+                        }
+                        setState(() => _category = cat);
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -107,8 +100,7 @@ class _MedicalCenterPickerState extends State<MedicalCenterPicker> {
                   ),
                   subtitle: Text(
                     filtered[i].location ?? '',
-                    style: textTheme.bodyText2!
-                        .copyWith(color: textTheme.caption!.color),
+                    style: textTheme.bodyText2!.copyWith(color: textTheme.caption!.color),
                   ),
                   onTap: () {
                     Navigator.pop(context, filtered[i]);
@@ -123,21 +115,22 @@ class _MedicalCenterPickerState extends State<MedicalCenterPicker> {
   }
 }
 
-enum MedicalCenterCategory { hospitals, lrcCenters, bloodBanks, medicalCenters }
+enum MedicalCenterCategory { hospitals,  bloodBanks, }// lrcCenters,medicalCenters
 
 extension on MedicalCenterCategory {
   String get name {
     switch (this) {
       case MedicalCenterCategory.hospitals:
         return 'Hospitals';
-      case MedicalCenterCategory.lrcCenters:
-        return 'Red Cross';
       case MedicalCenterCategory.bloodBanks:
         return 'Blood Banks';
-      case MedicalCenterCategory.medicalCenters:
-        return 'Others';
       default:
         return '';
     }
   }
 }
+     // case MedicalCenterCategory.lrcCenters:
+      //   return 'Red Cross';
+
+      // case MedicalCenterCategory.medicalCenters:
+      //   return 'Others';
